@@ -46,17 +46,28 @@ Message = dict  # {"role": "system" | "user" | "assistant", "content": str}
 
 # Model used for each role. Override any of these with the environment
 # variable CS329Z_<ROLE>_MODEL, e.g. CS329Z_GRADING_MODEL.
+# DEFAULT_MODELS = {
+#     "grading": "openai/gpt-6-luna",  # the model your agent is graded with
+#     "user": "openai/gpt-6-luna",  # plays the simulated users
+#     "judge": "openai/gpt-6-sol",  # scores evaluation transcripts
+# }
 DEFAULT_MODELS = {
-    "grading": "openai/gpt-6-luna",  # the model your agent is graded with
-    "user": "openai/gpt-6-luna",  # plays the simulated users
-    "judge": "openai/gpt-6-sol",  # scores evaluation transcripts
+    "grading": "deepseek-flash",  # the model your agent is graded with
+    "user": "deepseek-flash",  # plays the simulated users
+    "judge": "deepseek-v4-pro",  # scores evaluation transcripts
 }
+
+
+
+
+
+
 
 # Calls go to OpenRouter, which fronts many providers behind one
 # OpenAI-compatible API. Model names carry the provider as a prefix
 # ("openai/gpt-6-luna"); https://openrouter.ai/models lists them.
-OPENROUTER_URL = "https://openrouter.ai/api/v1"
-
+# OPENROUTER_URL = "https://openrouter.ai/api/v1"
+DEEPSEEK_URL = "https://api.deepseek.com"
 # Reasoning effort requested from models that accept it (GPT-5 and GPT-6).
 # Override with CS329Z_REASONING_EFFORT.
 DEFAULT_REASONING_EFFORT = "low"
@@ -69,6 +80,8 @@ DEFAULT_REASONING_EFFORT = "low"
 # https://openrouter.ai/models on 2026-10-05 (the same as OpenAI's list
 # prices).
 PRICES = {
+    "deepseek-flash": (0.15, 0.003, 0.60),
+    "deepseek-v4-pro": (0.66, 0.022, 1.98),
     "gpt-4.1": (2.00, 0.50, 8.00),
     "gpt-4.1-mini": (0.40, 0.10, 1.60),
     "gpt-4.1-nano": (0.10, 0.025, 0.40),
@@ -353,13 +366,28 @@ class LM:
         if self._client is None:
             from openai import OpenAI
 
-            key = os.environ.get("OPENROUTER_API_KEY")
+            # key = os.environ.get("OPENROUTER_API_KEY")
+            # if not key:
+            #     raise RuntimeError(
+            #         "OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key."
+            #     )
+            # self._client = OpenAI(
+            #     base_url=OPENROUTER_URL,
+            #     api_key=key,
+            #     max_retries=6,
+            #     timeout=120,
+            #     default_headers={"X-Title": "CS329Z HW1"},
+            # )
+            
+            
+            key = os.environ.get("DEEPSEEK_API_KEY")
             if not key:
                 raise RuntimeError(
-                    "OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key."
+                    "DEEPSEEK_API_KEY is not set. Copy .env.example to .env and add your key."
                 )
+            
             self._client = OpenAI(
-                base_url=OPENROUTER_URL,
+                base_url=DEEPSEEK_URL,
                 api_key=key,
                 max_retries=6,
                 timeout=120,
