@@ -18,5 +18,9 @@ def prioritize_email(email: Email, lm: LMCallable):
     * Live: at least 85% agreement with tests/fixtures/priority_gold.json.
     """
     priority_tag =["urgent", "normal", "ignore", "unknown"]
-    a = email["body"]
+    email_body = email["body"]
+    system_prompt = ""
+
+    lm([{"role": "user", "content": "Say hello."}])
+
     return {}

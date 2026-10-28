@@ -7,7 +7,6 @@ It states every problem, what is graded, and the design decisions that
 are yours to make. This file covers setup, the commands you will run, and
 where things are.
 
-
 ## Setup
 
 1. Install `uv`, which manages Python and the dependencies:
@@ -19,7 +18,6 @@ where things are.
    options): the terminal sandbox runs commands with the `bash.exe` it
    ships, and there is no operating-system jail on Windows (see "The
    terminal sandbox" below). WSL works too and gives you the Linux jail.
-
 2. Create your `.env` file and add your API key:
 
    ```sh
@@ -28,8 +26,6 @@ where things are.
 
    Open `.env` and fill in `OPENROUTER_API_KEY`. The file is gitignored. Do not
    commit it.
-
-
 3. Unpack the email archive. It ships in the repository as
    `data/emails.jsonl.gz` (19 MB). This command verifies its checksum and
    unpacks it to `data/emails/emails.jsonl` (58 MB):
@@ -37,7 +33,6 @@ where things are.
    ```sh
    uv run python data/download.py
    ```
-
 4. Run the tests. In the starter, every test fails with `NotImplementedError`:
 
    ```sh
@@ -124,7 +119,6 @@ The wrapper does three things:
   ```sh
   uv run python -m cs329z_hw1.llm
   ```
-
 - **Budget.** The key we issue you has a spending limit on our side, and
   calls fail once it is reached. `CS329Z_BUDGET_USD` (in `.env` or the
   environment) is a second limit you set for yourself: once the ledger
@@ -154,7 +148,6 @@ For each problem:
        from cs329z_hw1.pipelines.priority import classify_priority
        return classify_priority(email, lm)
    ```
-
 5. Run that problem's tests, deterministic first and then live.
 
 The deterministic tests are the complete list of the error handling we
@@ -204,7 +197,6 @@ data/
   priority_rubric.md    provided  read  how the gold priority labels were assigned
   emails/                         unpacked by download.py, gitignored
 ```
-
 
 You may add files and subpackages inside `cs329z_hw1/`. Grading copies
 your whole `cs329z_hw1/` package into a clean starter and discards
