@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug CS329z Email Priority",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "cs329z_hw1.show",
+      "args": ["priority", "em-12167"],
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}

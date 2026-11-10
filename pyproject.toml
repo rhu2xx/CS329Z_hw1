@@ -9,6 +9,8 @@ dependencies = [
     "jsonschema>=4.20",
     "pytest>=8.0",
     "numpy>=2.0",
+    "httpx[socks]>=0.28.1",
+    "socksio>=1.0.0",
 ]
 
 [build-system]

@@ -1,5 +1,5 @@
 from cs329z_hw1.types import Email, LMCallable
-
+import json
 
 def prioritize_email(email: Email, lm: LMCallable):
     """Problem (priority).
@@ -19,8 +19,13 @@ def prioritize_email(email: Email, lm: LMCallable):
     """
     priority_tag =["urgent", "normal", "ignore", "unknown"]
     email_body = email["body"]
-    system_prompt = ""
+    system_prompt = f"""You're an email priority assistant. Classify each email into one of four categories:
+          {priority_tag}. Each email gets exactly one of four categories: {priority_tag}. 
+          Please return the json result : ["category": #1, "reason": #2]  that #1 and #2 are the blanks you need to fill where #1 is the category the email is classified into and #2 is the reason why the email belongs to that category.
+      """
+    user_prompt = "Based on the following text, classify the email body into one of four labels. The content:\n"
+    reply = lm([{"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt + email_body}])
+    result = json.loads(reply)
 
-    lm([{"role": "user", "content": "Say hello."}])
-
-    return {}
+    return {"category": result["category"],  "reason" : result[ "reason"]}
