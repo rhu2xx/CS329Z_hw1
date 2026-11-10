@@ -1,7 +1,7 @@
 from cs329z_hw1.types import Email, LMCallable
 
 
-def prioritize_email(email: Email, lm: LMCallable):
+def prioritize_email(email: Email, lm: LMCallable)-> dict:
     """Problem (priority).
 
     Classify one email for its recipient, calling the model through ``lm``.
