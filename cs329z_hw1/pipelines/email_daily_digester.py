@@ -47,7 +47,9 @@ def daily_digest(emails: list[Email], lm: LMCallable) -> str:
         thread_group.values(),
         key=lambda item: rank[item["priority"]["category"]],
     )
-    system_prompt = f"""You're an daily email summary assistant. Given the emails of one day, write a morning email digest for a business employee. Please control word count <= 300. Put urgent items first. Explicitly name the company, project, or site mentioned in each urgent item."""
+    system_prompt = """You're an daily email summary assistant. 
+                        Given the emails of one day, write a morning email digest for a business employee. 
+                        Please control word count <= 300. Put urgent items first. Explicitly name the company, project, or site mentioned in each urgent item."""
     items_text = json.dumps(ordered_items, ensure_ascii=False, indent=2)
     reply = lm([{"role": "system", "content": system_prompt},
                     {"role": "user", "content": items_text}])
