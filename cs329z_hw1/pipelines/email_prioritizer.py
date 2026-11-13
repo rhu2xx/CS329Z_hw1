@@ -2,6 +2,11 @@ import json
 import re
 
 from cs329z_hw1.types import Email, LMCallable
+import logging
+logger = logging.getLogger(__name__)
+
+
+
 
 
 PRIORITY_LABELS = {"urgent", "normal", "ignore"}
@@ -53,7 +58,35 @@ Response:
 {"category": "ignore", "reason": "The email advertises a furniture sale without a work request."}
 """
 
+
+
 def prioritize_email(email: Email, lm: LMCallable) -> dict[str, str]:
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {
+            "role": "user",
+            "content": json.dumps({
+                "subject": email["subject"],
+                "body": email["body"],
+            }),
+        },
+    ]
+    for _ in range(3): # Retry 
+        try:
+            reply = lm(messages)
+        except Exception as exc:
+            return {
+                "category": "unknown",
+                "reason": ""
+            }
+
+
+
+
+
+
+
+# def prioritize_email(email: Email, lm: LMCallable) -> dict[str, str]:
     email_content = json.dumps({
         "subject": email["subject"],
         "body": email["body"],

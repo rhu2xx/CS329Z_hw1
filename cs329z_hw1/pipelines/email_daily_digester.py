@@ -2,7 +2,7 @@ from cs329z_hw1.types import Email, LMCallable
 from cs329z_hw1.pipelines.email_prioritizer import prioritize_email
 from concurrent.futures import ThreadPoolExecutor
 import json
-
+import logging
 
 
 
@@ -50,6 +50,12 @@ def daily_digest(emails: list[Email], lm: LMCallable) -> str:
     system_prompt = """You're an daily email summary assistant. 
                         Given the emails of one day, write a morning email digest for a business employee. 
                         Please control word count <= 300. Put urgent items first. Explicitly name the company, project, or site mentioned in each urgent item."""
+    
+    
+    
+    
+    
+    
     items_text = json.dumps(ordered_items, ensure_ascii=False, indent=2)
     reply = lm([{"role": "system", "content": system_prompt},
                     {"role": "user", "content": items_text}])
