@@ -1,8 +1,8 @@
-import json
 import re
-
-from cs329z_hw1.types import Email, LMCallable
 import logging
+import json
+from cs329z_hw1.types import Email, LMCallable
+
 logger = logging.getLogger(__name__)
 
 
@@ -57,6 +57,11 @@ Email:
 Response:
 {"category": "ignore", "reason": "The email advertises a furniture sale without a work request."}
 """
+def parse_priority_reply(reply: str) -> dict[str, str]:
+    result = json.loads(reply) # raise json.JSONDecodeError automatically if fails
+
+    if not isinstance(result, dict):
+        raise 
 
 
 
@@ -77,8 +82,11 @@ def prioritize_email(email: Email, lm: LMCallable) -> dict[str, str]:
         except Exception as exc:
             return {
                 "category": "unknown",
-                "reason": ""
+                "reason": f"The model call failed ({tyepe(exc).__name__})"
             }
+        # try:
+        #     return parse_priority_reply(reply)
+
 
 
 
