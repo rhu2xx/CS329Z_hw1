@@ -115,8 +115,8 @@ def test_live_accuracy(live_lm):
             unknown.append(item["email"]["id"])
         if result["category"] != item["category"]:
             wrong.append(
-                f"  {item['email']['id']} gold={item['category']} yours={result['category']} "
-                f"subject={item['email']['subject'][:50]!r}"
+                f"  {item['email']['id']} gold={item['category']} yours={result['category']} your_reason ={result['reason']}"
+                f" subject={item['email']['subject'][:50]!r} date = {item['email']['date']}"
             )
     correct = len(gold) - len(wrong)
     print(f"priority accuracy: {correct} of {len(gold)} (run with -s to see this when the test passes)")
