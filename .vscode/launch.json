@@ -28,6 +28,23 @@
       ],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
+    },
+    {
+      "name": "Debug live digest tests",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "tests/test_daily_digest.py",
+        "-m",
+        "live",
+        "-s"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": {
+        "PYDEVD_WARN_EVALUATION_TIMEOUT": "30"
+      }
     }
   ]
 }
